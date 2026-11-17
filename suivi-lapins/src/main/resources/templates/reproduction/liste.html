@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Reproduction')}"></head>
+<body>
+<div class="app-layout">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+    <main class="contenu-principal">
+        <div class="entete-page">
+            <div>
+                <h1>Reproduction et mises bas</h1>
+                <div class="sous-titre">Les lapereaux nés vivants sont créés automatiquement avec le sexe inconnu</div>
+            </div>
+        </div>
+
+        <div th:if="${succes}" class="message-succes" th:text="${succes}"></div>
+        <div th:if="${erreur}" class="message-erreur" th:text="${erreur}"></div>
+
+        <div class="carte">
+            <h2>Enregistrer une mise bas</h2>
+            <div th:if="${#lists.isEmpty(femelles)}" class="message-info">
+                Aucune lapine vivante enregistrée. Ajoutez d'abord une lapine dans la rubrique Lapins.
+            </div>
+            <form th:action="@{/reproduction}" method="post" th:if="${!#lists.isEmpty(femelles)}">
+                <div class="formulaire-grille">
+                    <div class="champ">
+                        <label for="mereId">Lapine mère *</label>
+                        <select id="mereId" name="mereId" required>
+                            <option value="">-- Choisir une lapine --</option>
+                            <option th:each="f : ${femelles}"
+                                    th:value="${f.id}"
+                                    th:text="${f.code + (f.clapier != null ? ' (' + f.clapier + ')' : '')}"></option>
+                        </select>
+                    </div>
+
+                    <div class="champ">
+                        <label for="pereId">Lapin père (facultatif)</label>
+                        <select id="pereId" name="pereId">
+                            <option value="">Non renseigné</option>
+                            <option th:each="m : ${males}"
+                                    th:value="${m.id}"
+                                    th:text="${m.code + (m.clapier != null ? ' (' + m.clapier + ')' : '')}"></option>
+                        </select>
+                    </div>
+
+                    <div class="champ">
+                        <label for="dateMiseBas">Date de mise bas *</label>
+                        <input type="date" id="dateMiseBas" name="dateMiseBas"
+                               th:value="${aujourdHui}" th:max="${aujourdHui}" required>
+                    </div>
+
+                    <div class="champ">
+                        <label for="nombreNesVivants">Lapereaux nés vivants *</label>
+                        <input type="number" id="nombreNesVivants" name="nombreNesVivants" min="0" value="0" required>
+                    </div>
+
+                    <div class="champ">
+                        <label for="nombreMortNes">Lapereaux mort-nés *</label>
+                        <input type="number" id="nombreMortNes" name="nombreMortNes" min="0" value="0" required>
+                    </div>
+
+                    <div class="champ">
+                        <label for="observation">Observation</label>
+                        <input type="text" id="observation" name="observation" maxlength="500">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primaire" style="margin-top: 8px;">
+                    Enregistrer la mise bas
+                </button>
+            </form>
+        </div>
+
+        <div class="carte">
+            <h2>Historique des mises bas</h2>
+            <div class="message-info">
+                Les portées enregistrées génèrent des fiches individuelles de lapins et ne sont pas modifiables afin de garder l'historique cohérent.
+            </div>
+            <div th:if="${#lists.isEmpty(misesBas)}" class="vide-texte">
+                Aucune mise bas enregistrée pour le moment.
+            </div>
+            <div class="conteneur-tableau" th:if="${!#lists.isEmpty(misesBas)}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Lapine mère</th>
+                        <th>Lapin père</th>
+                        <th>Nés vivants</th>
+                        <th>Mort-nés</th>
+                        <th>Observation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="mb : ${misesBas}">
+                        <td th:text="${#temporals.format(mb.dateMiseBas, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${mb.mere.code}"></td>
+                        <td th:text="${mb.pere != null ? mb.pere.code : '-'}"></td>
+                        <td th:text="${mb.nombreNesVivants}"></td>
+                        <td th:text="${mb.nombreMortNes}"></td>
+                        <td th:text="${mb.observation != null ? mb.observation : '-'}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

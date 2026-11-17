@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Modifier une dépense')}"></head>
+<body>
+<div class="app-layout">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+    <main class="contenu-principal">
+        <div class="entete-page">
+            <div>
+                <h1>Modifier une dépense</h1>
+            </div>
+            <a th:href="@{/depenses}" class="btn btn-secondaire">Retour aux dépenses</a>
+        </div>
+
+        <div th:if="${erreur}" class="message-erreur" th:text="${erreur}"></div>
+
+        <div class="carte">
+            <form th:action="@{/depenses/{id}/modifier(id=${depense.id})}" method="post">
+                <div class="formulaire-grille">
+                    <div class="champ">
+                        <label for="dateDepense">Date *</label>
+                        <input type="date" id="dateDepense" name="dateDepense"
+                               th:max="${aujourdHui}"
+                               th:value="${depense.dateDepense != null ? #temporals.format(depense.dateDepense, 'yyyy-MM-dd') : ''}"
+                               required>
+                    </div>
+                    <div class="champ">
+                        <label for="categorie">Catégorie *</label>
+                        <select id="categorie" name="categorie" required>
+                            <option th:each="c : ${categories}"
+                                    th:value="${c}"
+                                    th:text="${c.libelle}"
+                                    th:selected="${depense.categorie == c}"></option>
+                        </select>
+                    </div>
+                    <div class="champ">
+                        <label for="montant">Montant (FCFA) *</label>
+                        <input type="number" id="montant" name="montant" min="1" step="0.01"
+                               th:value="${depense.montant}" required>
+                    </div>
+                    <div class="champ">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description"
+                               th:value="${depense.description}" maxlength="500">
+                    </div>
+                </div>
+
+                <div class="actions-ligne" style="margin-top: 14px;">
+                    <button type="submit" class="btn btn-primaire">Enregistrer les modifications</button>
+                    <a th:href="@{/depenses}" class="btn btn-secondaire">Annuler</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

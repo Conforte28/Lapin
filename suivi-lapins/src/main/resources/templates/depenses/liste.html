@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Dépenses')}"></head>
+<body>
+<div class="app-layout">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+    <main class="contenu-principal">
+        <div class="entete-page">
+            <div>
+                <h1>Dépenses de l'élevage</h1>
+                <div class="sous-titre">Alimentation, soins, entretien et autres charges</div>
+            </div>
+        </div>
+
+        <div th:if="${succes}" class="message-succes" th:text="${succes}"></div>
+        <div th:if="${erreur}" class="message-erreur" th:text="${erreur}"></div>
+
+        <div class="carte">
+            <h2>Ajouter une dépense</h2>
+            <form th:action="@{/depenses}" method="post">
+                <div class="formulaire-grille">
+                    <div class="champ">
+                        <label for="dateDepense">Date *</label>
+                        <input type="date" id="dateDepense" name="dateDepense"
+                               th:value="${aujourdHui}" th:max="${aujourdHui}" required>
+                    </div>
+                    <div class="champ">
+                        <label for="categorie">Catégorie *</label>
+                        <select id="categorie" name="categorie" required>
+                            <option th:each="c : ${categories}"
+                                    th:value="${c}"
+                                    th:text="${c.libelle}"></option>
+                        </select>
+                    </div>
+                    <div class="champ">
+                        <label for="montant">Montant (FCFA) *</label>
+                        <input type="number" id="montant" name="montant" min="1" step="0.01" required>
+                    </div>
+                    <div class="champ">
+                        <label for="description">Description (facultatif)</label>
+                        <input type="text" id="description" name="description" maxlength="500">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primaire" style="margin-top: 8px;">
+                    Enregistrer la dépense
+                </button>
+            </form>
+        </div>
+
+        <div class="carte">
+            <h2>Liste des dépenses</h2>
+            <div th:if="${#lists.isEmpty(depenses)}" class="vide-texte">
+                Aucune dépense enregistrée.
+            </div>
+            <div class="conteneur-tableau" th:if="${!#lists.isEmpty(depenses)}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Catégorie</th>
+                        <th>Montant</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="d : ${depenses}">
+                        <td th:text="${#temporals.format(d.dateDepense, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${d.categorie.libelle}"></td>
+                        <td th:text="${#numbers.formatDecimal(d.montant, 1, 'WHITESPACE', 0, 'COMMA')} + ' FCFA'"></td>
+                        <td th:text="${d.description != null ? d.description : '-'}"></td>
+                        <td>
+                            <div class="actions-ligne">
+                                <a th:href="@{/depenses/{id}/modifier(id=${d.id})}"
+                                   class="btn btn-secondaire btn-petit">Modifier</a>
+                                <form th:action="@{/depenses/{id}/supprimer(id=${d.id})}" method="post"
+                                      onsubmit="return confirm('Confirmer la suppression de cette dépense ?');">
+                                    <button type="submit" class="btn btn-danger btn-petit">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

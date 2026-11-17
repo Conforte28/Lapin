@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Administration')}"></head>
+<body>
+<div class="app-layout">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+    <main class="contenu-principal">
+        <div class="entete-page">
+            <div>
+                <h1>Administration des utilisateurs</h1>
+                <div class="sous-titre">Création et gestion des comptes d'accès</div>
+            </div>
+        </div>
+
+        <div th:if="${succes}" class="message-succes" th:text="${succes}"></div>
+        <div th:if="${erreur}" class="message-erreur" th:text="${erreur}"></div>
+
+        <div class="carte">
+            <h2>Créer un utilisateur</h2>
+            <form th:action="@{/admin/utilisateurs}" method="post">
+                <div class="formulaire-grille">
+                    <div class="champ">
+                        <label for="email">Adresse de connexion *</label>
+                        <input type="email" id="email" name="email" required maxlength="150">
+                    </div>
+                    <div class="champ">
+                        <label for="nomComplet">Nom complet *</label>
+                        <input type="text" id="nomComplet" name="nomComplet" required maxlength="120">
+                    </div>
+                    <div class="champ">
+                        <label for="motDePasse">Mot de passe (min. 6 caractères) *</label>
+                        <input type="password" id="motDePasse" name="motDePasse" required minlength="6">
+                    </div>
+                    <div class="champ">
+                        <label for="role">Rôle *</label>
+                        <select id="role" name="role" required>
+                            <option th:each="r : ${roles}"
+                                    th:value="${r}"
+                                    th:text="${r.libelle}"></option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primaire" style="margin-top: 8px;">
+                    Créer le compte
+                </button>
+            </form>
+        </div>
+
+        <div class="carte">
+            <h2>Comptes enregistrés</h2>
+            <div class="conteneur-tableau">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Adresse de connexion</th>
+                        <th>Nom complet</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
+                        <th>Activation</th>
+                        <th>Nouveau mot de passe</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="u : ${utilisateurs}">
+                        <td><strong th:text="${u.email}"></strong></td>
+                        <td th:text="${u.nomComplet}"></td>
+                        <td th:text="${u.role.libelle}"></td>
+                        <td>
+                            <span class="statut-badge"
+                                  th:classappend="${u.actif} ? 'statut-vivant' : 'statut-inactif'"
+                                  th:text="${u.actif} ? 'Actif' : 'Désactivé'"></span>
+                        </td>
+                        <td>
+                            <form th:action="@{/admin/utilisateurs/{id}/toggle-actif(id=${u.id})}" method="post">
+                                <button type="submit" class="btn btn-petit"
+                                        th:classappend="${u.actif} ? 'btn-danger' : 'btn-primaire'"
+                                        th:text="${u.actif} ? 'Désactiver' : 'Activer'"></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/admin/utilisateurs/{id}/mot-de-passe(id=${u.id})}" method="post"
+                                  class="inline-form">
+                                <input type="password" name="nouveauMotDePasse" placeholder="Min. 6 caractères"
+                                       minlength="6" required>
+                                <button type="submit" class="btn btn-secondaire btn-petit">Modifier</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

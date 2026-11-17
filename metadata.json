@@ -1,0 +1,6 @@
+{
+  "name": "Suivi Lapins",
+  "description": "Application web Java Spring Boot de suivi de production de lapins",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Paramètres')}"></head>
+<body>
+<div class="app-layout">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+    <main class="contenu-principal">
+        <div class="entete-page">
+            <div>
+                <h1>Paramètres</h1>
+                <div class="sous-titre">Informations de l'exploitation et sécurité du compte</div>
+            </div>
+        </div>
+
+        <div th:if="${succes}" class="message-succes" th:text="${succes}"></div>
+        <div th:if="${erreur}" class="message-erreur" th:text="${erreur}"></div>
+
+        <div class="grille-deux-colonnes">
+            <div class="carte">
+                <h2>Informations de l'exploitation</h2>
+
+                <div sec:authorize="hasRole('ADMIN')">
+                    <form th:action="@{/parametres/exploitation}" method="post">
+                        <div class="champ">
+                            <label for="nomExploitation">Nom de l'exploitation *</label>
+                            <input type="text" id="nomExploitation" name="nomExploitation"
+                                   th:value="${parametres.nomExploitation}" required maxlength="150">
+                        </div>
+                        <div class="champ">
+                            <label for="commune">Commune *</label>
+                            <input type="text" id="commune" name="commune"
+                                   th:value="${parametres.commune}" required maxlength="120">
+                        </div>
+                        <div class="champ">
+                            <label for="contact">Contact (téléphone ou autre)</label>
+                            <input type="text" id="contact" name="contact"
+                                   th:value="${parametres.contact}" maxlength="120">
+                        </div>
+                        <button type="submit" class="btn btn-primaire">Enregistrer les paramètres</button>
+                    </form>
+                </div>
+
+                <div sec:authorize="!hasRole('ADMIN')">
+                    <p style="margin-bottom: 10px;">
+                        <strong>Nom de l'exploitation :</strong>
+                        <span th:text="${parametres.nomExploitation}"></span>
+                    </p>
+                    <p style="margin-bottom: 10px;">
+                        <strong>Commune :</strong>
+                        <span th:text="${parametres.commune}"></span>
+                    </p>
+                    <p style="margin-bottom: 14px;">
+                        <strong>Contact :</strong>
+                        <span th:text="${parametres.contact != null and !#strings.isEmpty(parametres.contact) ? parametres.contact : 'Non renseigné'}"></span>
+                    </p>
+                    <div class="message-info">
+                        Seul un administrateur peut modifier les informations de l'exploitation.
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <h2>Modifier mon mot de passe</h2>
+                <p class="sous-titre" style="margin-bottom: 14px;">
+                    Compte : <strong th:text="${utilisateur.email}"></strong>
+                    (<span th:text="${utilisateur.role.libelle}"></span>)
+                </p>
+
+                <form th:action="@{/parametres/mot-de-passe}" method="post">
+                    <div class="champ">
+                        <label for="ancienMotDePasse">Mot de passe actuel *</label>
+                        <input type="password" id="ancienMotDePasse" name="ancienMotDePasse" required>
+                    </div>
+                    <div class="champ">
+                        <label for="nouveauMotDePasse">Nouveau mot de passe (min. 6 caractères) *</label>
+                        <input type="password" id="nouveauMotDePasse" name="nouveauMotDePasse"
+                               minlength="6" required>
+                    </div>
+                    <div class="champ">
+                        <label for="confirmationMotDePasse">Confirmer le nouveau mot de passe *</label>
+                        <input type="password" id="confirmationMotDePasse" name="confirmationMotDePasse"
+                               minlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primaire">Mettre à jour mon mot de passe</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

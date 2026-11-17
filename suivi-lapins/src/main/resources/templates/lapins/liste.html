@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Lapins')}"></head>
+<body>
+<div class="app-layout">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+    <main class="contenu-principal">
+        <div class="entete-page">
+            <div>
+                <h1>Gestion des lapins</h1>
+                <div class="sous-titre">Fiches individuelles du cheptel</div>
+            </div>
+            <a th:href="@{/lapins/nouveau}" class="btn btn-primaire">Ajouter un lapin</a>
+        </div>
+
+        <div th:if="${succes}" class="message-succes" th:text="${succes}"></div>
+        <div th:if="${erreur}" class="message-erreur" th:text="${erreur}"></div>
+
+        <div class="carte">
+            <form th:action="@{/lapins}" method="get" class="barre-filtres">
+                <div class="champ">
+                    <label for="code">Rechercher par code</label>
+                    <input type="text" id="code" name="code" th:value="${codeFiltre}" placeholder="Ex : LAP-F01">
+                </div>
+                <div class="champ">
+                    <label for="sexe">Sexe</label>
+                    <select id="sexe" name="sexe">
+                        <option value="">Tous</option>
+                        <option th:each="s : ${sexes}"
+                                th:value="${s}"
+                                th:text="${s.libelle}"
+                                th:selected="${sexeFiltre == s}"></option>
+                    </select>
+                </div>
+                <div class="champ">
+                    <label for="statut">Statut</label>
+                    <select id="statut" name="statut">
+                        <option value="">Tous</option>
+                        <option th:each="st : ${statuts}"
+                                th:value="${st}"
+                                th:text="${st.libelle}"
+                                th:selected="${statutFiltre == st}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primaire">Filtrer</button>
+                <a th:href="@{/lapins}" class="btn btn-secondaire">Réinitialiser</a>
+            </form>
+
+            <div th:if="${#lists.isEmpty(lapins)}" class="vide-texte">
+                Aucun lapin enregistré pour ces critères.
+            </div>
+
+            <div class="conteneur-tableau" th:if="${!#lists.isEmpty(lapins)}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Sexe</th>
+                        <th>Race / Type</th>
+                        <th>Date de naissance</th>
+                        <th>Clapier</th>
+                        <th>Poids (kg)</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="lapin : ${lapins}">
+                        <td><strong th:text="${lapin.code}"></strong></td>
+                        <td th:text="${lapin.sexe.libelle}"></td>
+                        <td th:text="${lapin.race != null ? lapin.race : '-'}"></td>
+                        <td th:text="${lapin.dateNaissance != null ? #temporals.format(lapin.dateNaissance, 'dd/MM/yyyy') : '-'}"></td>
+                        <td th:text="${lapin.clapier != null ? lapin.clapier : '-'}"></td>
+                        <td th:text="${lapin.poidsKg != null ? #numbers.formatDecimal(lapin.poidsKg, 1, 'NONE', 2, 'COMMA') + ' kg' : '-'}"></td>
+                        <td>
+                            <span class="statut-badge"
+                                  th:classappend="${lapin.statut.name() == 'VIVANT'} ? 'statut-vivant' : (${lapin.statut.name() == 'VENDU'} ? 'statut-vendu' : 'statut-mort')"
+                                  th:text="${lapin.statut.libelle}"></span>
+                        </td>
+                        <td>
+                            <div class="actions-ligne">
+                                <a th:href="@{/lapins/{id}/modifier(id=${lapin.id})}"
+                                   class="btn btn-secondaire btn-petit">Modifier</a>
+                                <form th:action="@{/lapins/{id}/supprimer(id=${lapin.id})}" method="post"
+                                      onsubmit="return confirm('Confirmer la suppression de cette fiche ?');">
+                                    <button type="submit" class="btn btn-danger btn-petit">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

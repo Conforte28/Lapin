@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Accès refusé')}"></head>
+<body>
+<div class="app-layout">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+    <main class="contenu-principal">
+        <div class="carte">
+            <h2>Accès refusé</h2>
+            <p class="message-erreur">
+                Vous n'avez pas les droits nécessaires pour accéder à cette page.
+            </p>
+            <a th:href="@{/dashboard}" class="btn btn-primaire">Retour au tableau de bord</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+target/
+.idea/
+*.iml
+.vscode/
+nbactions.xml
+nb-configuration.xml
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db

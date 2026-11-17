@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Connexion')}"></head>
+<body>
+<div class="page-connexion">
+    <div class="carte-connexion">
+        <h1>Suivi Lapins</h1>
+        <p class="sous-titre" th:text="${exploitation.nomExploitation} + ' - ' + ${exploitation.commune}">
+            Gestion d'élevage cunicole
+        </p>
+
+        <div th:if="${param.erreur}" class="message-erreur">
+            Identifiants incorrects ou compte désactivé.
+        </div>
+        <div th:if="${param.deconnexion}" class="message-succes">
+            Vous avez été déconnecté.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="champ">
+                <label for="username">Adresse de connexion</label>
+                <input type="text" id="username" name="username" required autofocus>
+            </div>
+            <div class="champ">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primaire" style="width: 100%; margin-top: 6px;">
+                Se connecter
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

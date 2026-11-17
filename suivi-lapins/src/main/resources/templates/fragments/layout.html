@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(titre)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titre} + ' - Suivi Lapins'">Suivi Lapins</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<aside class="sidebar" th:fragment="sidebar">
+    <div class="sidebar-entete">
+        <div class="sidebar-titre">Suivi Lapins</div>
+        <div class="sidebar-ferme" th:text="${exploitation.nomExploitation} + ' (' + ${exploitation.commune} + ')'">
+            Élevage
+        </div>
+    </div>
+
+    <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+    <label for="menu-toggle" class="menu-bouton">Menu de navigation</label>
+
+    <nav class="sidebar-nav">
+        <a th:href="@{/dashboard}"
+           th:classappend="${uriCourante == '/' || uriCourante.startsWith('/dashboard')} ? 'actif' : ''"
+           class="nav-lien">Tableau de bord</a>
+        <a th:href="@{/lapins}"
+           th:classappend="${uriCourante.startsWith('/lapins')} ? 'actif' : ''"
+           class="nav-lien">Lapins</a>
+        <a th:href="@{/reproduction}"
+           th:classappend="${uriCourante.startsWith('/reproduction')} ? 'actif' : ''"
+           class="nav-lien">Reproduction</a>
+        <a th:href="@{/sorties}"
+           th:classappend="${uriCourante.startsWith('/sorties')} ? 'actif' : ''"
+           class="nav-lien">Sorties</a>
+        <a th:href="@{/depenses}"
+           th:classappend="${uriCourante.startsWith('/depenses')} ? 'actif' : ''"
+           class="nav-lien">Dépenses</a>
+        <a th:href="@{/admin/utilisateurs}"
+           sec:authorize="hasRole('ADMIN')"
+           th:classappend="${uriCourante.startsWith('/admin')} ? 'actif' : ''"
+           class="nav-lien">Administration</a>
+        <a th:href="@{/parametres}"
+           th:classappend="${uriCourante.startsWith('/parametres')} ? 'actif' : ''"
+           class="nav-lien">Paramètres</a>
+    </nav>
+
+    <div class="sidebar-pied">
+        <div class="utilisateur-info">
+            Connecté : <strong sec:authentication="name">utilisateur</strong>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn-deconnexion">Se déconnecter</button>
+        </form>
+    </div>
+</aside>
+
+</body>
+</html>

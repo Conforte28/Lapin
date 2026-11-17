@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Sorties')}"></head>
+<body>
+<div class="app-layout">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+
+    <main class="contenu-principal">
+        <div class="entete-page">
+            <div>
+                <h1>Sorties du cheptel</h1>
+                <div class="sous-titre">Enregistrement des ventes et des décès</div>
+            </div>
+        </div>
+
+        <div th:if="${succes}" class="message-succes" th:text="${succes}"></div>
+        <div th:if="${erreur}" class="message-erreur" th:text="${erreur}"></div>
+
+        <div th:if="${#lists.isEmpty(lapinsVivants)}" class="message-info">
+            Aucun lapin vivant disponible pour enregistrer une nouvelle sortie.
+        </div>
+
+        <div class="grille-deux-colonnes" th:if="${!#lists.isEmpty(lapinsVivants)}">
+            <div class="carte">
+                <h2>Enregistrer une vente</h2>
+                <form th:action="@{/sorties/vente}" method="post">
+                    <div class="champ">
+                        <label for="lapinVente">Lapin vivant *</label>
+                        <select id="lapinVente" name="lapinId" required>
+                            <option value="">-- Choisir un lapin --</option>
+                            <option th:each="l : ${lapinsVivants}"
+                                    th:value="${l.id}"
+                                    th:text="${l.code + ' (' + l.sexe.libelle + ')'}"></option>
+                        </select>
+                    </div>
+                    <div class="champ">
+                        <label for="dateVente">Date de vente *</label>
+                        <input type="date" id="dateVente" name="dateSortie"
+                               th:value="${aujourdHui}" th:max="${aujourdHui}" required>
+                    </div>
+                    <div class="champ">
+                        <label for="montantVente">Montant (FCFA) *</label>
+                        <input type="number" id="montantVente" name="montant" min="1" step="1" required>
+                    </div>
+                    <div class="champ">
+                        <label for="acheteur">Acheteur (facultatif)</label>
+                        <input type="text" id="acheteur" name="acheteur" maxlength="150">
+                    </div>
+                    <button type="submit" class="btn btn-primaire">Enregistrer la vente</button>
+                </form>
+            </div>
+
+            <div class="carte">
+                <h2>Enregistrer un décès</h2>
+                <form th:action="@{/sorties/deces}" method="post">
+                    <div class="champ">
+                        <label for="lapinDeces">Lapin vivant *</label>
+                        <select id="lapinDeces" name="lapinId" required>
+                            <option value="">-- Choisir un lapin --</option>
+                            <option th:each="l : ${lapinsVivants}"
+                                    th:value="${l.id}"
+                                    th:text="${l.code + ' (' + l.sexe.libelle + ')'}"></option>
+                        </select>
+                    </div>
+                    <div class="champ">
+                        <label for="dateDeces">Date du décès *</label>
+                        <input type="date" id="dateDeces" name="dateSortie"
+                               th:value="${aujourdHui}" th:max="${aujourdHui}" required>
+                    </div>
+                    <div class="champ">
+                        <label for="observationDeces">Cause ou observation (facultatif)</label>
+                        <input type="text" id="observationDeces" name="observation" maxlength="500">
+                    </div>
+                    <button type="submit" class="btn btn-primaire">Enregistrer le décès</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="carte">
+            <h2>Historique des sorties</h2>
+            <div class="message-info">
+                Les sorties enregistrées mettent à jour définitivement le statut du lapin afin de préserver la cohérence de l'historique.
+            </div>
+
+            <form th:action="@{/sorties}" method="get" class="barre-filtres">
+                <div class="champ">
+                    <label for="typeFiltre">Type de sortie</label>
+                    <select id="typeFiltre" name="type">
+                        <option value="">Toutes</option>
+                        <option th:each="t : ${typesSortie}"
+                                th:value="${t}"
+                                th:text="${t.libelle}"
+                                th:selected="${typeFiltre == t}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primaire">Filtrer</button>
+                <a th:href="@{/sorties}" class="btn btn-secondaire">Réinitialiser</a>
+            </form>
+
+            <div th:if="${#lists.isEmpty(sorties)}" class="vide-texte">
+                Aucune sortie enregistrée.
+            </div>
+            <div class="conteneur-tableau" th:if="${!#lists.isEmpty(sorties)}">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Lapin</th>
+                        <th>Type</th>
+                        <th>Montant (FCFA)</th>
+                        <th>Acheteur / Observation</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="s : ${sorties}">
+                        <td th:text="${#temporals.format(s.dateSortie, 'dd/MM/yyyy')}"></td>
+                        <td><strong th:text="${s.lapin.code}"></strong></td>
+                        <td>
+                            <span class="statut-badge"
+                                  th:classappend="${s.type.name() == 'VENTE'} ? 'statut-vendu' : 'statut-mort'"
+                                  th:text="${s.type.libelle}"></span>
+                        </td>
+                        <td th:text="${s.montant != null ? #numbers.formatDecimal(s.montant, 1, 'WHITESPACE', 0, 'COMMA') + ' FCFA' : '-'}"></td>
+                        <td th:text="${s.type.name() == 'VENTE'} ? (${s.acheteur != null ? s.acheteur : '-'}) : (${s.observation != null ? s.observation : '-'})"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
