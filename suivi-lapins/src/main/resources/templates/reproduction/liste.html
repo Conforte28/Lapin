@@ -27,9 +27,9 @@
             <form th:action="@{/reproduction}" method="post" th:if="${!#lists.isEmpty(femelles)}">
                 <div class="formulaire-grille">
                     <div class="champ">
-                        <label for="mereId">Lapine mère *</label>
+                        <label for="mereId">Lapine mère</label>
                         <select id="mereId" name="mereId" required>
-                            <option value="">-- Choisir une lapine --</option>
+                            <option value="">Choisir une lapine</option>
                             <option th:each="f : ${femelles}"
                                     th:value="${f.id}"
                                     th:text="${f.code + (f.clapier != null ? ' (' + f.clapier + ')' : '')}"></option>
@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="champ">
-                        <label for="pereId">Lapin père (facultatif)</label>
+                        <label for="pereId">Lapin père</label>
                         <select id="pereId" name="pereId">
                             <option value="">Non renseigné</option>
                             <option th:each="m : ${males}"
@@ -47,18 +47,18 @@
                     </div>
 
                     <div class="champ">
-                        <label for="dateMiseBas">Date de mise bas *</label>
+                        <label for="dateMiseBas">Date de mise bas</label>
                         <input type="date" id="dateMiseBas" name="dateMiseBas"
                                th:value="${aujourdHui}" th:max="${aujourdHui}" required>
                     </div>
 
                     <div class="champ">
-                        <label for="nombreNesVivants">Lapereaux nés vivants *</label>
+                        <label for="nombreNesVivants">Lapereaux nés vivants</label>
                         <input type="number" id="nombreNesVivants" name="nombreNesVivants" min="0" value="0" required>
                     </div>
 
                     <div class="champ">
-                        <label for="nombreMortNes">Lapereaux mort-nés *</label>
+                        <label for="nombreMortNes">Lapereaux mort-nés</label>
                         <input type="number" id="nombreMortNes" name="nombreMortNes" min="0" value="0" required>
                     </div>
 

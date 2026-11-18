@@ -21,19 +21,19 @@
             <form th:action="@{/admin/utilisateurs}" method="post">
                 <div class="formulaire-grille">
                     <div class="champ">
-                        <label for="email">Adresse de connexion *</label>
+                        <label for="email">Adresse de connexion</label>
                         <input type="email" id="email" name="email" required maxlength="150">
                     </div>
                     <div class="champ">
-                        <label for="nomComplet">Nom complet *</label>
+                        <label for="nomComplet">Nom complet</label>
                         <input type="text" id="nomComplet" name="nomComplet" required maxlength="120">
                     </div>
                     <div class="champ">
-                        <label for="motDePasse">Mot de passe (min. 6 caractères) *</label>
+                        <label for="motDePasse">Mot de passe</label>
                         <input type="password" id="motDePasse" name="motDePasse" required minlength="6">
                     </div>
                     <div class="champ">
-                        <label for="role">Rôle *</label>
+                        <label for="role">Rôle</label>
                         <select id="role" name="role" required>
                             <option th:each="r : ${roles}"
                                     th:value="${r}"
@@ -81,7 +81,7 @@
                         <td>
                             <form th:action="@{/admin/utilisateurs/{id}/mot-de-passe(id=${u.id})}" method="post"
                                   class="inline-form">
-                                <input type="password" name="nouveauMotDePasse" placeholder="Min. 6 caractères"
+                                <input type="password" name="nouveauMotDePasse" placeholder="Nouveau mot de passe"
                                        minlength="6" required>
                                 <button type="submit" class="btn btn-secondaire btn-petit">Modifier</button>
                             </form>

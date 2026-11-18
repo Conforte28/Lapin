@@ -13,7 +13,6 @@
                     <h1>Tableau de bord</h1>
                     <div class="sous-titre">
                         Période : <strong th:text="${#strings.capitalize(indicateurs.moisLibelle)}">mois</strong>
-                        — Africa/Porto-Novo
                     </div>
                 </div>
             </div>
@@ -23,37 +22,32 @@
             <div class="carte-indicateur">
                 <div class="libelle">Lapins vivants</div>
                 <div class="valeur" th:text="${indicateurs.lapinsVivants}">0</div>
-                <div class="precision">Effectif actuel en élevage</div>
             </div>
 
-            <div class="carte-indicateur">
+            <div class="carte-indicateur accent-eau">
                 <div class="libelle">Lapereaux nés vivants</div>
                 <div class="valeur" th:text="${indicateurs.nesVivantsMois}">0</div>
-                <div class="precision">Mois en cours</div>
             </div>
 
-            <div class="carte-indicateur">
+            <div class="carte-indicateur accent-brique">
                 <div class="libelle">Décès enregistrés</div>
                 <div class="valeur" th:text="${indicateurs.decesMois}">0</div>
-                <div class="precision">Mois en cours</div>
             </div>
 
-            <div class="carte-indicateur">
+            <div class="carte-indicateur accent-eau">
                 <div class="libelle">Ventes du mois</div>
                 <div class="valeur"
                      th:text="${#numbers.formatDecimal(indicateurs.ventesMois, 1, 'WHITESPACE', 0, 'COMMA')} + ' FCFA'">
                     0 FCFA
                 </div>
-                <div class="precision">Total des ventes du mois</div>
             </div>
 
-            <div class="carte-indicateur">
+            <div class="carte-indicateur accent-terre">
                 <div class="libelle">Dépenses du mois</div>
                 <div class="valeur"
                      th:text="${#numbers.formatDecimal(indicateurs.depensesMois, 1, 'WHITESPACE', 0, 'COMMA')} + ' FCFA'">
                     0 FCFA
                 </div>
-                <div class="precision">Total des dépenses du mois</div>
             </div>
 
             <div class="carte-indicateur">
@@ -62,7 +56,7 @@
                      th:text="${#numbers.formatDecimal(indicateurs.soldeMois, 1, 'WHITESPACE', 0, 'COMMA')} + ' FCFA'">
                     0 FCFA
                 </div>
-                <div class="precision">Solde simple : ventes moins dépenses</div>
+                <div class="precision">Ventes moins dépenses</div>
             </div>
         </div>
     </main>

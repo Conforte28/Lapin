@@ -21,12 +21,12 @@
                   method="post">
                 <div class="formulaire-grille">
                     <div class="champ">
-                        <label for="code">Code unique *</label>
+                        <label for="code">Code unique</label>
                         <input type="text" id="code" name="code" th:value="${lapin.code}" required maxlength="50">
                     </div>
 
                     <div class="champ">
-                        <label for="sexe">Sexe *</label>
+                        <label for="sexe">Sexe</label>
                         <select id="sexe" name="sexe" required>
                             <option th:each="s : ${sexes}"
                                     th:value="${s}"
@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="champ">
-                        <label for="poidsKg">Poids (kg)</label>
+                        <label for="poidsKg">Poids en kg</label>
                         <input type="number" id="poidsKg" name="poidsKg" step="0.01" min="0.01"
                                th:value="${lapin.poidsKg}">
                     </div>

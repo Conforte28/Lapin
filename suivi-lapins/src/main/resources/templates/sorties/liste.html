@@ -25,25 +25,25 @@
                 <h2>Enregistrer une vente</h2>
                 <form th:action="@{/sorties/vente}" method="post">
                     <div class="champ">
-                        <label for="lapinVente">Lapin vivant *</label>
+                        <label for="lapinVente">Lapin</label>
                         <select id="lapinVente" name="lapinId" required>
-                            <option value="">-- Choisir un lapin --</option>
+                            <option value="">Choisir un lapin</option>
                             <option th:each="l : ${lapinsVivants}"
                                     th:value="${l.id}"
-                                    th:text="${l.code + ' (' + l.sexe.libelle + ')'}"></option>
+                                    th:text="${l.code}"></option>
                         </select>
                     </div>
                     <div class="champ">
-                        <label for="dateVente">Date de vente *</label>
+                        <label for="dateVente">Date de vente</label>
                         <input type="date" id="dateVente" name="dateSortie"
                                th:value="${aujourdHui}" th:max="${aujourdHui}" required>
                     </div>
                     <div class="champ">
-                        <label for="montantVente">Montant (FCFA) *</label>
+                        <label for="montantVente">Montant en FCFA</label>
                         <input type="number" id="montantVente" name="montant" min="1" step="1" required>
                     </div>
                     <div class="champ">
-                        <label for="acheteur">Acheteur (facultatif)</label>
+                        <label for="acheteur">Acheteur</label>
                         <input type="text" id="acheteur" name="acheteur" maxlength="150">
                     </div>
                     <button type="submit" class="btn btn-primaire">Enregistrer la vente</button>
@@ -54,21 +54,21 @@
                 <h2>Enregistrer un décès</h2>
                 <form th:action="@{/sorties/deces}" method="post">
                     <div class="champ">
-                        <label for="lapinDeces">Lapin vivant *</label>
+                        <label for="lapinDeces">Lapin</label>
                         <select id="lapinDeces" name="lapinId" required>
-                            <option value="">-- Choisir un lapin --</option>
+                            <option value="">Choisir un lapin</option>
                             <option th:each="l : ${lapinsVivants}"
                                     th:value="${l.id}"
-                                    th:text="${l.code + ' (' + l.sexe.libelle + ')'}"></option>
+                                    th:text="${l.code}"></option>
                         </select>
                     </div>
                     <div class="champ">
-                        <label for="dateDeces">Date du décès *</label>
+                        <label for="dateDeces">Date du décès</label>
                         <input type="date" id="dateDeces" name="dateSortie"
                                th:value="${aujourdHui}" th:max="${aujourdHui}" required>
                     </div>
                     <div class="champ">
-                        <label for="observationDeces">Cause ou observation (facultatif)</label>
+                        <label for="observationDeces">Cause ou observation</label>
                         <input type="text" id="observationDeces" name="observation" maxlength="500">
                     </div>
                     <button type="submit" class="btn btn-primaire">Enregistrer le décès</button>
@@ -104,7 +104,7 @@
                         <th>Date</th>
                         <th>Lapin</th>
                         <th>Type</th>
-                        <th>Montant (FCFA)</th>
+                        <th>Montant</th>
                         <th>Acheteur / Observation</th>
                     </tr>
                     </thead>

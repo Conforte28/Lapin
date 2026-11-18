@@ -24,7 +24,7 @@
                 <div sec:authorize="hasRole('ADMIN')">
                     <form th:action="@{/parametres/exploitation}" method="post">
                         <div class="champ">
-                            <label for="nomExploitation">Nom de l'exploitation *</label>
+                            <label for="nomExploitation">Nom de l'exploitation</label>
                             <input type="text" id="nomExploitation" name="nomExploitation"
                                    th:value="${parametres.nomExploitation}" required maxlength="150">
                         </div>
@@ -62,21 +62,20 @@
                 <h2>Modifier mon mot de passe</h2>
                 <p class="sous-titre" style="margin-bottom: 14px;">
                     Compte : <strong th:text="${utilisateur.email}"></strong>
-                    (<span th:text="${utilisateur.role.libelle}"></span>)
                 </p>
 
                 <form th:action="@{/parametres/mot-de-passe}" method="post">
                     <div class="champ">
-                        <label for="ancienMotDePasse">Mot de passe actuel *</label>
+                        <label for="ancienMotDePasse">Mot de passe actuel</label>
                         <input type="password" id="ancienMotDePasse" name="ancienMotDePasse" required>
                     </div>
                     <div class="champ">
-                        <label for="nouveauMotDePasse">Nouveau mot de passe (min. 6 caractères) *</label>
+                        <label for="nouveauMotDePasse">Nouveau mot de passe</label>
                         <input type="password" id="nouveauMotDePasse" name="nouveauMotDePasse"
                                minlength="6" required>
                     </div>
                     <div class="champ">
-                        <label for="confirmationMotDePasse">Confirmer le nouveau mot de passe *</label>
+                        <label for="confirmationMotDePasse">Confirmer le mot de passe</label>
                         <input type="password" id="confirmationMotDePasse" name="confirmationMotDePasse"
                                minlength="6" required>
                     </div>
