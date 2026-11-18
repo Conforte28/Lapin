@@ -8,8 +8,7 @@
     <main class="contenu-principal">
         <div class="entete-page">
             <div>
-                <h1 th:text="${modeEdition} ? 'Modifier la fiche du lapin' : 'Ajouter un lapin'">Lapin</h1>
-                <div class="sous-titre">Les statuts vendu et mort se gèrent uniquement via les sorties</div>
+                <h1 th:text="${modeEdition} ? 'Modifier un lapin' : 'Ajouter un lapin'">Lapin</h1>
             </div>
             <a th:href="@{/lapins}" class="btn btn-secondaire">Retour à la liste</a>
         </div>
