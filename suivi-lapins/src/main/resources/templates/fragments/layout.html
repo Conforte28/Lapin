@@ -5,20 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${titre} + ' - AZWI'">AZWI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
 <aside class="sidebar" th:fragment="sidebar">
     <div class="sidebar-entete">
-        <div class="sidebar-titre">AZWI</div>
-        <div class="sidebar-sous-titre">Suivi de production de lapins</div>
-        <div class="sidebar-ferme"
-             th:if="${exploitation != null and ((exploitation.nomExploitation != null and exploitation.nomExploitation != 'AZWI') or (exploitation.commune != null and !#strings.isEmpty(exploitation.commune)))}">
-            <span th:text="${exploitation.nomExploitation}"></span>
-            <span th:if="${exploitation.commune != null and !#strings.isEmpty(exploitation.commune)}"
-                  th:text="' — ' + ${exploitation.commune}"></span>
+        <img th:src="@{/images/logo.jpg}" alt="Logo AZWI" class="marque-logo">
+        <div>
+            <div class="sidebar-titre">AZWI</div>
+            <div class="sidebar-sous-titre">Suivi de production de lapins</div>
         </div>
+    </div>
+
+    <div class="sidebar-ferme"
+         th:if="${exploitation != null and ((exploitation.nomExploitation != null and exploitation.nomExploitation != 'AZWI') or (exploitation.commune != null and !#strings.isEmpty(exploitation.commune)))}">
+        <strong th:text="${exploitation.nomExploitation}"></strong>
+        <span th:if="${exploitation.commune != null and !#strings.isEmpty(exploitation.commune)}"
+              th:text="' — ' + ${exploitation.commune}"></span>
     </div>
 
     <input type="checkbox" id="menu-toggle" class="menu-checkbox">
@@ -27,27 +34,52 @@
     <nav class="sidebar-nav">
         <a th:href="@{/dashboard}"
            th:classappend="${uriCourante == '/' || uriCourante.startsWith('/dashboard')} ? 'actif' : ''"
-           class="nav-lien">Tableau de bord</a>
+           class="nav-lien">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Tableau de bord</span>
+        </a>
         <a th:href="@{/lapins}"
            th:classappend="${uriCourante.startsWith('/lapins')} ? 'actif' : ''"
-           class="nav-lien">Lapins</a>
+           class="nav-lien">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <span>Lapins</span>
+        </a>
         <a th:href="@{/reproduction}"
            th:classappend="${uriCourante.startsWith('/reproduction')} ? 'actif' : ''"
-           class="nav-lien">Reproduction</a>
+           class="nav-lien">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg>
+            <span>Reproduction</span>
+        </a>
         <a th:href="@{/sorties}"
            th:classappend="${uriCourante.startsWith('/sorties')} ? 'actif' : ''"
-           class="nav-lien">Sorties</a>
+           class="nav-lien">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sorties</span>
+        </a>
         <a th:href="@{/depenses}"
            th:classappend="${uriCourante.startsWith('/depenses')} ? 'actif' : ''"
-           class="nav-lien">Dépenses</a>
+           class="nav-lien">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="6" width="20" height="12"/><circle cx="12" cy="12" r="2"/></svg>
+            <span>Dépenses</span>
+        </a>
         <a th:href="@{/admin/utilisateurs}"
            sec:authorize="hasRole('ADMIN')"
            th:classappend="${uriCourante.startsWith('/admin')} ? 'actif' : ''"
-           class="nav-lien">Administration</a>
+           class="nav-lien">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Administration</span>
+        </a>
         <a th:href="@{/parametres}"
            th:classappend="${uriCourante.startsWith('/parametres')} ? 'actif' : ''"
-           class="nav-lien">Paramètres</a>
+           class="nav-lien">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Paramètres</span>
+        </a>
     </nav>
+
+    <div class="sidebar-visuel">
+        <img th:src="@{/images/lapin-clapier.jpg}" alt="Lapin en clapier">
+    </div>
 
     <div class="sidebar-pied">
         <div class="utilisateur-info">

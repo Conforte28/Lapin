@@ -16,9 +16,9 @@
         <div th:if="${succes}" class="message-succes" th:text="${succes}"></div>
         <div th:if="${erreur}" class="message-erreur" th:text="${erreur}"></div>
 
-        <div th:if="${#lists.isEmpty(lapinsVivants)}" class="message-info">
+        <p th:if="${#lists.isEmpty(lapinsVivants)}" class="vide-texte">
             Aucun lapin vivant disponible pour enregistrer une nouvelle sortie.
-        </div>
+        </p>
 
         <div class="grille-deux-colonnes" th:if="${!#lists.isEmpty(lapinsVivants)}">
             <div class="carte">
@@ -78,9 +78,6 @@
 
         <div class="carte">
             <h2>Historique des sorties</h2>
-            <div class="message-info">
-                Les sorties enregistrées mettent à jour définitivement le statut du lapin afin de préserver la cohérence de l'historique.
-            </div>
 
             <form th:action="@{/sorties}" method="get" class="barre-filtres">
                 <div class="champ">

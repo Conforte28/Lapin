@@ -7,9 +7,12 @@
 
     <main class="contenu-principal">
         <div class="entete-page">
-            <div>
-                <h1>Reproduction et mises bas</h1>
-                <div class="sous-titre">Les lapereaux nés vivants sont créés automatiquement avec le sexe inconnu</div>
+            <div class="entete-page-visuel">
+                <img th:src="@{/images/clapier-elevage.jpg}" alt="Clapier" class="miniature-entete">
+                <div>
+                    <h1>Reproduction et mises bas</h1>
+                    <div class="sous-titre">Enregistrement des portées et création des lapereaux</div>
+                </div>
             </div>
         </div>
 
@@ -18,9 +21,9 @@
 
         <div class="carte">
             <h2>Enregistrer une mise bas</h2>
-            <div th:if="${#lists.isEmpty(femelles)}" class="message-info">
+            <p th:if="${#lists.isEmpty(femelles)}" class="vide-texte">
                 Aucune lapine vivante enregistrée. Ajoutez d'abord une lapine dans la rubrique Lapins.
-            </div>
+            </p>
             <form th:action="@{/reproduction}" method="post" th:if="${!#lists.isEmpty(femelles)}">
                 <div class="formulaire-grille">
                     <div class="champ">
@@ -73,9 +76,6 @@
 
         <div class="carte">
             <h2>Historique des mises bas</h2>
-            <div class="message-info">
-                Les portées enregistrées génèrent des fiches individuelles de lapins et ne sont pas modifiables afin de garder l'historique cohérent.
-            </div>
             <div th:if="${#lists.isEmpty(misesBas)}" class="vide-texte">
                 Aucune mise bas enregistrée pour le moment.
             </div>

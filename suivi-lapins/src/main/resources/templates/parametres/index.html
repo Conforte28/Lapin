@@ -51,13 +51,10 @@
                         <strong>Commune :</strong>
                         <span th:text="${parametres.commune != null and !#strings.isEmpty(parametres.commune) ? parametres.commune : 'Non renseignée'}"></span>
                     </p>
-                    <p style="margin-bottom: 14px;">
+                    <p style="margin-bottom: 10px;">
                         <strong>Contact :</strong>
                         <span th:text="${parametres.contact != null and !#strings.isEmpty(parametres.contact) ? parametres.contact : 'Non renseigné'}"></span>
                     </p>
-                    <div class="message-info">
-                        Seul un administrateur peut modifier les informations de l'exploitation.
-                    </div>
                 </div>
             </div>
 

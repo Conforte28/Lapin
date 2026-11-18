@@ -5,8 +5,17 @@
 <div class="connexion-layout">
     <aside class="connexion-sidebar">
         <div>
-            <div class="connexion-marque">AZWI</div>
-            <div class="connexion-sous-marque">Suivi de production de lapins</div>
+            <div class="connexion-entete">
+                <img th:src="@{/images/logo.jpg}" alt="Logo AZWI" class="marque-logo">
+                <div>
+                    <div class="connexion-marque">AZWI</div>
+                    <div class="connexion-sous-marque">Suivi de production de lapins</div>
+                </div>
+            </div>
+
+            <div class="connexion-photo">
+                <img th:src="@{/images/clapier-elevage.jpg}" alt="Clapier d'élevage cunicole">
+            </div>
 
             <div class="connexion-presentation">
                 <h2>Présentation</h2>
@@ -22,7 +31,8 @@
             </div>
         </div>
 
-        <div class="connexion-pied-sidebar" th:if="${exploitation != null}">
+        <div class="connexion-pied-sidebar"
+             th:if="${exploitation != null and ((exploitation.nomExploitation != null and !#strings.isEmpty(exploitation.nomExploitation)) or (exploitation.commune != null and !#strings.isEmpty(exploitation.commune)))}">
             <div th:if="${exploitation.nomExploitation != null and !#strings.isEmpty(exploitation.nomExploitation)}">
                 Exploitation : <strong th:text="${exploitation.nomExploitation}">AZWI</strong>
             </div>

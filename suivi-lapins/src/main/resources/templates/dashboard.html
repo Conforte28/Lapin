@@ -7,11 +7,14 @@
 
     <main class="contenu-principal">
         <div class="entete-page">
-            <div>
-                <h1>Tableau de bord</h1>
-                <div class="sous-titre">
-                    Période : <strong th:text="${#strings.capitalize(indicateurs.moisLibelle)}">mois</strong>
-                    — Fuseau : Africa/Porto-Novo
+            <div class="entete-page-visuel">
+                <img th:src="@{/images/lapin-roux.jpg}" alt="Lapin" class="miniature-entete">
+                <div>
+                    <h1>Tableau de bord</h1>
+                    <div class="sous-titre">
+                        Période : <strong th:text="${#strings.capitalize(indicateurs.moisLibelle)}">mois</strong>
+                        — Africa/Porto-Novo
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,19 +64,6 @@
                 </div>
                 <div class="precision">Solde simple : ventes moins dépenses</div>
             </div>
-        </div>
-
-        <div class="carte">
-            <h2>Exploitation</h2>
-            <p>
-                <strong>Nom :</strong> <span th:text="${exploitation.nomExploitation}">AZWI</span>
-                <span th:if="${exploitation.commune != null and !#strings.isEmpty(exploitation.commune)}">
-                    <br><strong>Commune :</strong> <span th:text="${exploitation.commune}"></span>
-                </span>
-                <span th:if="${exploitation.contact != null and !#strings.isEmpty(exploitation.contact)}">
-                    <br><strong>Contact :</strong> <span th:text="${exploitation.contact}"></span>
-                </span>
-            </p>
         </div>
     </main>
 </div>
