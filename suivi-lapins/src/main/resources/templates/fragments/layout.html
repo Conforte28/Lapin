@@ -4,16 +4,20 @@
 <head th:fragment="head(titre)">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${titre} + ' - Suivi Lapins'">Suivi Lapins</title>
+    <title th:text="${titre} + ' - AZWI'">AZWI</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
 <aside class="sidebar" th:fragment="sidebar">
     <div class="sidebar-entete">
-        <div class="sidebar-titre">Suivi Lapins</div>
-        <div class="sidebar-ferme" th:text="${exploitation.nomExploitation} + ' (' + ${exploitation.commune} + ')'">
-            Élevage
+        <div class="sidebar-titre">AZWI</div>
+        <div class="sidebar-sous-titre">Suivi de production de lapins</div>
+        <div class="sidebar-ferme"
+             th:if="${exploitation != null and ((exploitation.nomExploitation != null and exploitation.nomExploitation != 'AZWI') or (exploitation.commune != null and !#strings.isEmpty(exploitation.commune)))}">
+            <span th:text="${exploitation.nomExploitation}"></span>
+            <span th:if="${exploitation.commune != null and !#strings.isEmpty(exploitation.commune)}"
+                  th:text="' — ' + ${exploitation.commune}"></span>
         </div>
     </div>
 

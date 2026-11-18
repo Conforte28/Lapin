@@ -2,34 +2,63 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/layout :: head('Connexion')}"></head>
 <body>
-<div class="page-connexion">
-    <div class="carte-connexion">
-        <h1>Suivi Lapins</h1>
-        <p class="sous-titre" th:text="${exploitation.nomExploitation} + ' - ' + ${exploitation.commune}">
-            Gestion d'élevage cunicole
-        </p>
+<div class="connexion-layout">
+    <aside class="connexion-sidebar">
+        <div>
+            <div class="connexion-marque">AZWI</div>
+            <div class="connexion-sous-marque">Suivi de production de lapins</div>
 
-        <div th:if="${param.erreur}" class="message-erreur">
-            Identifiants incorrects ou compte désactivé.
-        </div>
-        <div th:if="${param.deconnexion}" class="message-succes">
-            Vous avez été déconnecté.
+            <div class="connexion-presentation">
+                <h2>Présentation</h2>
+                <p>
+                    Application de gestion destinée au suivi quotidien d'une exploitation cunicole.
+                </p>
+                <ul class="connexion-liste">
+                    <li>Gestion des fiches individuelles des lapins et des clapiers</li>
+                    <li>Enregistrement des mises bas et création automatique des lapereaux</li>
+                    <li>Suivi des ventes, des décès et des dépenses en FCFA</li>
+                    <li>Indicateurs mensuels calculés à partir des données enregistrées</li>
+                </ul>
+            </div>
         </div>
 
-        <form th:action="@{/login}" method="post">
-            <div class="champ">
-                <label for="username">Adresse de connexion</label>
-                <input type="text" id="username" name="username" required autofocus>
+        <div class="connexion-pied-sidebar" th:if="${exploitation != null}">
+            <div th:if="${exploitation.nomExploitation != null and !#strings.isEmpty(exploitation.nomExploitation)}">
+                Exploitation : <strong th:text="${exploitation.nomExploitation}">AZWI</strong>
             </div>
-            <div class="champ">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" required>
+            <div th:if="${exploitation.commune != null and !#strings.isEmpty(exploitation.commune)}">
+                Commune : <span th:text="${exploitation.commune}"></span>
             </div>
-            <button type="submit" class="btn btn-primaire" style="width: 100%; margin-top: 6px;">
-                Se connecter
-            </button>
-        </form>
-    </div>
+        </div>
+    </aside>
+
+    <main class="connexion-contenu">
+        <div class="carte-connexion">
+            <h1>Connexion</h1>
+            <p class="sous-titre">Accédez à votre espace de gestion</p>
+
+            <div th:if="${param.erreur}" class="message-erreur">
+                Identifiants incorrects ou compte désactivé.
+            </div>
+            <div th:if="${param.deconnexion}" class="message-succes">
+                Vous avez été déconnecté.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="champ">
+                    <label for="username">Adresse de connexion</label>
+                    <input type="text" id="username" name="username" required autofocus>
+                </div>
+                <div class="champ">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primaire" style="width: 100%; margin-top: 6px;">
+                    Se connecter
+                </button>
+            </form>
+        </div>
+    </main>
 </div>
 </body>
 </html>

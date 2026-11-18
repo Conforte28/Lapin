@@ -66,10 +66,12 @@
         <div class="carte">
             <h2>Exploitation</h2>
             <p>
-                <strong>Nom :</strong> <span th:text="${exploitation.nomExploitation}">Exploitation</span><br>
-                <strong>Commune :</strong> <span th:text="${exploitation.commune}">Commune</span><br>
+                <strong>Nom :</strong> <span th:text="${exploitation.nomExploitation}">AZWI</span>
+                <span th:if="${exploitation.commune != null and !#strings.isEmpty(exploitation.commune)}">
+                    <br><strong>Commune :</strong> <span th:text="${exploitation.commune}"></span>
+                </span>
                 <span th:if="${exploitation.contact != null and !#strings.isEmpty(exploitation.contact)}">
-                    <strong>Contact :</strong> <span th:text="${exploitation.contact}"></span>
+                    <br><strong>Contact :</strong> <span th:text="${exploitation.contact}"></span>
                 </span>
             </p>
         </div>

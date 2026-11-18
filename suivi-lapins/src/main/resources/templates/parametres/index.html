@@ -29,12 +29,12 @@
                                    th:value="${parametres.nomExploitation}" required maxlength="150">
                         </div>
                         <div class="champ">
-                            <label for="commune">Commune *</label>
+                            <label for="commune">Commune</label>
                             <input type="text" id="commune" name="commune"
-                                   th:value="${parametres.commune}" required maxlength="120">
+                                   th:value="${parametres.commune}" maxlength="120">
                         </div>
                         <div class="champ">
-                            <label for="contact">Contact (téléphone ou autre)</label>
+                            <label for="contact">Contact</label>
                             <input type="text" id="contact" name="contact"
                                    th:value="${parametres.contact}" maxlength="120">
                         </div>
@@ -49,7 +49,7 @@
                     </p>
                     <p style="margin-bottom: 10px;">
                         <strong>Commune :</strong>
-                        <span th:text="${parametres.commune}"></span>
+                        <span th:text="${parametres.commune != null and !#strings.isEmpty(parametres.commune) ? parametres.commune : 'Non renseignée'}"></span>
                     </p>
                     <p style="margin-bottom: 14px;">
                         <strong>Contact :</strong>

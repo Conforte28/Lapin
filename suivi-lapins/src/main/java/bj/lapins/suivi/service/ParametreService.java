@@ -18,7 +18,7 @@ public class ParametreService {
     public ParametreExploitation obtenirParametres() {
         return parametreRepository.findFirstByOrderByIdAsc()
                 .orElseGet(() -> parametreRepository.save(
-                        new ParametreExploitation("Mon Élevage Cunicole", "Abomey-Calavi", "")));
+                        new ParametreExploitation("AZWI", "", "")));
     }
 
     @Transactional
@@ -29,9 +29,6 @@ public class ParametreService {
 
         if (nom.isEmpty()) {
             throw new IllegalArgumentException("Le nom de l'exploitation est obligatoire.");
-        }
-        if (communeNettoyee.isEmpty()) {
-            throw new IllegalArgumentException("La commune est obligatoire.");
         }
 
         ParametreExploitation parametres = obtenirParametres();

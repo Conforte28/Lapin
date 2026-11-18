@@ -83,12 +83,12 @@ public class DataInitializer implements CommandLineRunner {
         if (utilisateurRepository.count() == 0) {
             utilisateurService.creerUtilisateur(
                     "admin@lapins.bj",
-                    "Administrateur Ferme",
+                    "Administrateur",
                     demoPassword,
                     Role.ADMIN);
             utilisateurService.creerUtilisateur(
                     "agent@lapins.bj",
-                    "Agent Élevage",
+                    "Agent",
                     demoPassword,
                     Role.AGENT);
         }
@@ -99,10 +99,7 @@ public class DataInitializer implements CommandLineRunner {
                 && depenseRepository.count() == 0;
 
         if (baseVide) {
-            parametreService.mettreAJour(
-                    "Élevage Cunicole la Verdure",
-                    "Abomey-Calavi",
-                    "+229 01 97 00 00 00");
+            parametreService.mettreAJour("AZWI", "", "");
 
             LocalDate aujourdHui = LocalDate.now(ZONE_BENIN);
             LocalDate dateMoisCourant = aujourdHui.getDayOfMonth() > 3
@@ -112,7 +109,7 @@ public class DataInitializer implements CommandLineRunner {
             Lapin mere1 = lapinService.ajouter(
                     "LAP-F01",
                     Sexe.FEMELLE,
-                    "Néo-Zélandais",
+                    null,
                     aujourdHui.minusMonths(9),
                     "Clapier A1",
                     new BigDecimal("3.60"));
@@ -120,7 +117,7 @@ public class DataInitializer implements CommandLineRunner {
             lapinService.ajouter(
                     "LAP-F02",
                     Sexe.FEMELLE,
-                    "Californien",
+                    null,
                     aujourdHui.minusMonths(7),
                     "Clapier A2",
                     new BigDecimal("3.30"));
@@ -128,7 +125,7 @@ public class DataInitializer implements CommandLineRunner {
             Lapin pere1 = lapinService.ajouter(
                     "LAP-M01",
                     Sexe.MALE,
-                    "Néo-Zélandais",
+                    null,
                     aujourdHui.minusMonths(10),
                     "Clapier B1",
                     new BigDecimal("3.90"));
@@ -136,7 +133,7 @@ public class DataInitializer implements CommandLineRunner {
             Lapin lapinAVendre = lapinService.ajouter(
                     "LAP-004",
                     Sexe.MALE,
-                    "Métis local",
+                    null,
                     aujourdHui.minusMonths(4),
                     "Clapier C1",
                     new BigDecimal("2.45"));
@@ -144,7 +141,7 @@ public class DataInitializer implements CommandLineRunner {
             Lapin lapinDecede = lapinService.ajouter(
                     "LAP-005",
                     Sexe.FEMELLE,
-                    "Métis local",
+                    null,
                     aujourdHui.minusMonths(3),
                     "Clapier C2",
                     new BigDecimal("1.95"));
@@ -155,36 +152,36 @@ public class DataInitializer implements CommandLineRunner {
                     dateMoisCourant,
                     4,
                     1,
-                    "Première portée du mois, mère attentive");
+                    null);
 
             sortieService.enregistrerVente(
                     lapinAVendre.getId(),
                     dateMoisCourant,
                     new BigDecimal("12000"),
-                    "Restaurant Le Palmier");
+                    null);
 
             sortieService.enregistrerDeces(
                     lapinDecede.getId(),
                     dateMoisCourant,
-                    "Perte d'appétit constatée la veille");
+                    null);
 
             depenseService.enregistrer(
                     dateMoisCourant,
                     CategorieDepense.ALIMENTATION,
                     new BigDecimal("6500"),
-                    "Achat de provende et son de blé");
+                    "Provende");
 
             depenseService.enregistrer(
                     dateMoisCourant,
                     CategorieDepense.SOINS,
                     new BigDecimal("2000"),
-                    "Vitamines et désinfectant");
+                    "Soins vétérinaires");
 
             depenseService.enregistrer(
                     dateMoisCourant,
                     CategorieDepense.ENTRETIEN,
                     new BigDecimal("1500"),
-                    "Réparation d'abreuvoir");
+                    "Entretien clapier");
         }
     }
 }

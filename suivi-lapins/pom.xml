@@ -13,9 +13,9 @@
 
     <groupId>bj.lapins</groupId>
     <artifactId>suivi-lapins</artifactId>
-    <version>1.0.0</version>
-    <name>Suivi Lapins</name>
-    <description>Application web de suivi de production de lapins</description>
+    <version>2.0.0</version>
+    <name>AZWI</name>
+    <description>Application web de suivi de production de lapins AZWI</description>
 
     <properties>
         <java.version>17</java.version>
